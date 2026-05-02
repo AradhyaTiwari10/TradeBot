@@ -40,25 +40,28 @@ def trade(
         client = get_client()
         result = place_order(client, order)
 
-        # Exact output format required by spec
-        print("Order Summary:")
-        print()
-        print(f"* Symbol: {order.symbol}")
-        print(f"* Side: {order.side}")
-        print(f"* Type: {order.order_type}")
-        print(f"* Quantity: {order.quantity}")
-        print()
-        print("Result:")
-        print()
-        print(f"* Order ID: {result.order_id}")
-        print(f"* Status: {result.status}")
-        print(f"* Executed Qty: {result.executed_qty}")
-        print(f"* Avg Price: {result.avg_price}")
+        # Improved, aligned output
+        print("---")
+        print("## Order Summary\n")
+        print(f"Symbol      : {order.symbol}")
+        print(f"Side        : {order.side}")
+        print(f"Type        : {order.order_type}")
+        print(f"Quantity    : {order.quantity}\n")
+        print("---\n")
+        print("## Result\n")
+        print(f"Order ID    : {result.order_id}")
+        print(f"Status      : {result.status}")
+        print(f"Executed Qty: {result.executed_qty}")
+        print(f"Avg Price   : {result.avg_price}\n")
 
     except (ValidationError, APIError) as exc:
-        print(f"❌ Error: {exc}")
+        print("---")
+        print("❌ Error\n")
+        print(f"Message: {exc}\n")
     except Exception as exc:  # pragma: no cover - unexpected errors
-        print(f"❌ Error: {exc}")
+        print("---")
+        print("❌ Error\n")
+        print(f"Message: {exc}\n")
 
 
 if __name__ == "__main__":

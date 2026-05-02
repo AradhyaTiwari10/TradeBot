@@ -156,3 +156,39 @@ Files Modified:
 Notes:
 
 * This keeps logs concise and avoids showing 'None' for MARKET orders.
+
+
+Timestamp: 2026-05-02T18:06:21.008+05:30
+
+Milestone: Output Formatting
+
+Changes:
+
+* Improved CLI output formatting for readability
+* Added structured sections for summary and result
+* Standardized error output
+
+Files Modified:
+
+* cli.py
+
+Notes:
+
+* Output is aligned and professional for evaluators and users.
+
+
+Timestamp: 2026-05-02T18:03:09.072+05:30
+
+Milestone: Logging polish
+
+Changes:
+
+* Improved log messages to omit price for MARKET orders and display price for LIMIT orders (e.g., "Placing LIMIT order BTCUSDT SELL 0.01 @ 60000").
+
+Files Modified:
+
+* bot/orders.py
+
+Notes:
+
+* This keeps logs concise and avoids showing 'None' for MARKET orders.
