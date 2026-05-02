@@ -6,3 +6,7 @@
 2026-05-02 18:32:45,148 - ERROR - Order error: APIError(code=-2021): Order would immediately trigger.
 2026-05-02 18:39:53,776 - INFO - Placing MARKET order BTCUSDT BUY 0.01
 2026-05-02 18:39:53,953 - INFO - Order Success ID=13099788485 Status=NEW
+2026-05-02 19:33:28,987 - INFO - Placing MARKET order BTCUSDT BUY 0.01
+2026-05-02 19:33:29,617 - INFO - Order Success ID=13099907948 Status=NEW
+2026-05-02 19:33:31,207 - INFO - Placing LIMIT order BTCUSDT SELL 0.01 @ 60000.0
+2026-05-02 19:33:31,496 - ERROR - Order error: APIError(code=-4024): Limit price can't be lower than 74447.90.
