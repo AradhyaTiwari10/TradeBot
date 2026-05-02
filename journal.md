@@ -80,3 +80,22 @@ Files Modified:
 Notes:
 
 * This change makes the positional 'price' argument unambiguous and prevents Typer from treating earlier tokens as the quantity.
+
+
+Timestamp: 2026-05-02T17:27:04.250+05:30
+
+Milestone: Validation Layer
+
+Changes:
+
+* Implemented input validation for OrderRequest: side, order_type, quantity, price
+* Integrated validate_order_request into place_order before API calls
+
+Files Modified:
+
+* bot/validators.py
+* bot/orders.py
+
+Notes:
+
+* Validation is kept separate from business logic and raises ValidationError on invalid inputs. Quantity and price must be positive numbers; side and order_type are constrained to BUY/SELL and MARKET/LIMIT respectively.

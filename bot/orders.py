@@ -17,6 +17,11 @@ def place_order(client: Any, order_request: OrderRequest) -> OrderResponse:
         APIError: for upstream API errors
     """
     try:
+        # Validate order before calling the exchange
+        from .validators import validate_order_request
+
+        validate_order_request(order_request)
+
         if order_request.order_type.upper() == "MARKET":
             resp = client.futures_create_order(
                 symbol=order_request.symbol,
