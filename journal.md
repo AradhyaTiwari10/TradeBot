@@ -6,3 +6,22 @@
 
 TODO:
 - Record design decisions and milestones as development progresses.
+
+
+Timestamp: 2026-05-02T16:03:13.146+05:30
+
+Milestone: Client Layer
+
+Changes:
+
+* Implemented Binance client initialization
+* Loaded environment variables using dotenv
+* Added validation for API keys
+
+Files Modified:
+
+* bot/client.py
+
+Notes:
+
+* Assumes python-binance supports `testnet=True` and that python-dotenv is installed. The function raises ValueError if credentials are missing and does not print or exit.
