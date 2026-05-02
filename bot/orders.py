@@ -24,14 +24,21 @@ def place_order(client: Any, order_request: OrderRequest) -> OrderResponse:
         validate_order_request(order_request)
 
         # Log the outgoing request (do not include secrets)
-        logging.info(
-            "Placing %s order %s %s %s %s",
-            order_request.order_type.upper(),
-            order_request.symbol,
-            order_request.side,
-            order_request.quantity,
-            order_request.price,
-        )
+        if order_request.order_type.upper() == "MARKET":
+            logging.info(
+                "Placing MARKET order %s %s %s",
+                order_request.symbol,
+                order_request.side,
+                order_request.quantity,
+            )
+        else:
+            logging.info(
+                "Placing LIMIT order %s %s %s @ %s",
+                order_request.symbol,
+                order_request.side,
+                order_request.quantity,
+                order_request.price,
+            )
 
         if order_request.order_type.upper() == "MARKET":
             resp = client.futures_create_order(

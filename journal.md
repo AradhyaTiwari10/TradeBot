@@ -139,3 +139,20 @@ Files Modified:
 Notes:
 
 * Logging improves observability and debugging capability
+
+
+Timestamp: 2026-05-02T18:03:09.072+05:30
+
+Milestone: Logging polish
+
+Changes:
+
+* Improved log messages to omit price for MARKET orders and display price for LIMIT orders (e.g., "Placing LIMIT order BTCUSDT SELL 0.01 @ 60000").
+
+Files Modified:
+
+* bot/orders.py
+
+Notes:
+
+* This keeps logs concise and avoids showing 'None' for MARKET orders.
