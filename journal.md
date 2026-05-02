@@ -118,3 +118,24 @@ Files Modified:
 Notes:
 
 * validate_order is an alias to the internal validate_order_request to provide the exact API requested. Validation prevents invalid API calls and improves reliability.
+
+
+Timestamp: 2026-05-02T17:32:32.042+05:30
+
+Milestone: Logging System
+
+Changes:
+
+* Implemented centralized logging configuration
+* Added request and response logging in order execution
+* Integrated logging into CLI startup
+
+Files Modified:
+
+* bot/logging_config.py
+* bot/orders.py
+* cli.py
+
+Notes:
+
+* Logging improves observability and debugging capability

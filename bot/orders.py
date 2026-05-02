@@ -19,8 +19,19 @@ def place_order(client: Any, order_request: OrderRequest) -> OrderResponse:
     try:
         # Validate order before calling the exchange
         from .validators import validate_order_request
+        import logging
 
         validate_order_request(order_request)
+
+        # Log the outgoing request (do not include secrets)
+        logging.info(
+            "Placing %s order %s %s %s %s",
+            order_request.order_type.upper(),
+            order_request.symbol,
+            order_request.side,
+            order_request.quantity,
+            order_request.price,
+        )
 
         if order_request.order_type.upper() == "MARKET":
             resp = client.futures_create_order(
@@ -50,6 +61,8 @@ def place_order(client: Any, order_request: OrderRequest) -> OrderResponse:
         avg_price_raw = resp.get("avgPrice")
         avg_price = float(avg_price_raw) if avg_price_raw not in (None, "") else None
 
+        logging.info("Order Success ID=%s Status=%s", order_id, status)
+
         return OrderResponse(
             order_id=order_id,
             status=status,
@@ -60,5 +73,8 @@ def place_order(client: Any, order_request: OrderRequest) -> OrderResponse:
     except ValidationError:
         raise
     except Exception as exc:
-        # Wrap any client/API error
+        # Log the error and wrap it
+        import logging
+
+        logging.error("Order error: %s", exc)
         raise APIError(str(exc)) from exc
