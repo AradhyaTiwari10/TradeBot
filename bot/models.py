@@ -1,11 +1,23 @@
-"""Models module placeholder.
+"""Data models for trading requests and responses.
 
-Purpose:
-- Define data models (Pydantic or dataclasses) describing domain objects.
-
-TODO:
-- Create model classes for Order, Trade, Account, and Config.
-- Keep models lightweight and serializable.
+Uses dataclasses for lightweight, typed structures shared across modules.
 """
+from dataclasses import dataclass
+from typing import Optional
 
-# TODO: add data models
+
+@dataclass
+class OrderRequest:
+    symbol: str
+    side: str
+    order_type: str
+    quantity: float
+    price: Optional[float] = None
+
+
+@dataclass
+class OrderResponse:
+    order_id: int
+    status: str
+    executed_qty: float
+    avg_price: Optional[float] = None

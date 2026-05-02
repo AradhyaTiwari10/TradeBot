@@ -1,10 +1,20 @@
-"""Exceptions module placeholder.
+"""Custom exceptions used across the trading bot.
 
-Purpose:
-- Define custom exception hierarchy for the trading bot.
-
-TODO:
-- Add exceptions like BotError, ClientError, ValidationError, OrderError.
+Keep exceptions simple and reusable; no business logic here.
 """
 
-# TODO: define custom exceptions
+from typing import Optional
+
+
+class ValidationError(Exception):
+    """Raised when input validation fails."""
+
+    def __init__(self, message: Optional[str] = None) -> None:
+        super().__init__(message or "Validation error")
+
+
+class APIError(Exception):
+    """Raised when an upstream API or exchange returns an error."""
+
+    def __init__(self, message: Optional[str] = None) -> None:
+        super().__init__(message or "API error")

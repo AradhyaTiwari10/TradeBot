@@ -25,3 +25,22 @@ Files Modified:
 Notes:
 
 * Assumes python-binance supports `testnet=True` and that python-dotenv is installed. The function raises ValueError if credentials are missing and does not print or exit.
+
+
+Timestamp: 2026-05-02T16:15:32.145+05:30
+
+Milestone: Models + Exceptions
+
+Changes:
+
+* Created OrderRequest and OrderResponse dataclasses
+* Added custom exceptions: ValidationError, APIError
+
+Files Modified:
+
+* bot/models.py
+* bot/exceptions.py
+
+Notes:
+
+* Dataclasses chosen for lightweight, serializable structures without runtime validation; keeps models decoupled from business logic.
