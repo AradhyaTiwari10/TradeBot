@@ -3,7 +3,7 @@ from typing import Optional
 
 import typer
 
-from bot.client import get_client
+from bot.client import get_client, get_exchange_info, get_symbol_rules
 from bot.models import OrderRequest
 from bot.orders import place_order
 from bot.validators import validate_order
@@ -23,8 +23,8 @@ def trade(
     stop_price: Optional[float] = typer.Argument(None),
 ) -> None:
     """Place an order on Binance Futures Testnet.
-    
-    Example: python cli.py BTCUSDT BUY MARKET 0.01
+
+    Example: python cli.py trade BTCUSDT BUY MARKET 0.01
     """
     try:
         order = OrderRequest(
@@ -36,9 +36,12 @@ def trade(
             stop_price=stop_price,
         )
 
-        validate_order(order)
         client = get_client()
-        result = place_order(client, order)
+        exchange_info = get_exchange_info(client)
+        rules = get_symbol_rules(exchange_info, order.symbol)
+
+        validate_order(order, rules)
+        result = place_order(client, order, rules)
 
         print("---")
         print("## Order Summary\n")
@@ -57,6 +60,31 @@ def trade(
         print("---")
         print("Error\n")
         print(f"Message: {exc}\n")
+    except Exception as exc:
+        print("---")
+        print("Error\n")
+        print(f"Message: {exc}\n")
+
+
+@app.command()
+def info(symbol: str = typer.Argument(...)) -> None:
+    """Show symbol trading rules (minQty, stepSize, tickSize, minPrice)."""
+    try:
+        client = get_client()
+        exchange_info = get_exchange_info(client)
+        rules = get_symbol_rules(exchange_info, symbol)
+
+        if not rules:
+            print(f"No trading rules found for symbol: {symbol}")
+            return
+
+        print("---")
+        print(f"Symbol: {symbol.upper()}\n")
+        print(f"minQty   : {rules.get('minQty')}")
+        print(f"stepSize : {rules.get('stepSize')}")
+        print(f"tickSize : {rules.get('tickSize')}")
+        print(f"minPrice : {rules.get('minPrice')}\n")
+
     except Exception as exc:
         print("---")
         print("Error\n")

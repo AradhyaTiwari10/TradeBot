@@ -1,2 +1,8 @@
 2026-05-02 17:59:01,987 - INFO - Placing MARKET order BTCUSDT BUY 0.01 None
 2026-05-02 17:59:02,795 - INFO - Order Success ID=13099696425 Status=NEW
+2026-05-02 18:29:11,402 - INFO - Placing STOP_LIMIT order BTCUSDT BUY 0.01 @ 60000.0 stop=60500.0
+2026-05-02 18:29:11,919 - ERROR - Order error: APIError(code=-2021): Order would immediately trigger.
+2026-05-02 18:32:44,418 - INFO - Placing STOP_LIMIT order BTCUSDT BUY 0.01 @ 72000.0 stop=71000.0
+2026-05-02 18:32:45,148 - ERROR - Order error: APIError(code=-2021): Order would immediately trigger.
+2026-05-02 18:39:53,776 - INFO - Placing MARKET order BTCUSDT BUY 0.01
+2026-05-02 18:39:53,953 - INFO - Order Success ID=13099788485 Status=NEW

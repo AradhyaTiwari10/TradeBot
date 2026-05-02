@@ -258,3 +258,43 @@ Files Modified:
 Notes:
 
 * Code now reads naturally and does not bear signs of AI generation.
+
+
+Timestamp: 2026-05-02T18:45:00.000+05:30
+
+Milestone: Exchange Validation
+
+Changes:
+
+* Added exchange info fetching and symbol rule extraction
+* Implemented exchange-aware quantity and price validation using Decimal
+* Cached exchange info to avoid repeated API calls
+* Integrated rule checks into CLI and order flow
+
+Files Modified:
+
+* bot/client.py
+* bot/validators.py
+* cli.py
+
+Notes:
+
+* Prevents many invalid orders before API calls and improves robustness. Cache avoids extra network traffic.
+
+
+Timestamp: 2026-05-02T18:40:28.768+05:30
+
+Milestone: CLI Multi-Command
+
+Changes:
+
+* Refactored CLI to support multiple commands (trade, info)
+* Added info command to display symbol rules
+
+Files Modified:
+
+* cli.py
+
+Notes:
+
+* Trade flow unchanged; info reuses existing exchange helpers for rules display.

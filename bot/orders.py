@@ -1,13 +1,13 @@
 """Order execution."""
 import logging
-from typing import Any
+from typing import Any, Optional
 
 from .models import OrderRequest, OrderResponse
 from .validators import validate_order
 from .exceptions import ValidationError, APIError
 
 
-def place_order(client: Any, order_request: OrderRequest) -> OrderResponse:
+def place_order(client: Any, order_request: OrderRequest, exchange_rules: Optional[dict] = None) -> OrderResponse:
     """Submit order to exchange and return result.
     
     Raises:
@@ -15,7 +15,8 @@ def place_order(client: Any, order_request: OrderRequest) -> OrderResponse:
         APIError: if exchange call fails
     """
     try:
-        validate_order(order_request)
+        # perform validation (optionally using exchange rules provided by caller)
+        validate_order(order_request, exchange_rules)
 
         order_type = order_request.order_type.upper()
         if order_type == "MARKET":
