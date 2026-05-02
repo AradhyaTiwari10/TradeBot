@@ -44,3 +44,22 @@ Files Modified:
 Notes:
 
 * Dataclasses chosen for lightweight, serializable structures without runtime validation; keeps models decoupled from business logic.
+
+
+Timestamp: 2026-05-02T17:15:49.722+05:30
+
+Milestone: CLI Layer
+
+Changes:
+
+* Implemented CLI using Typer
+* Integrated order placement flow
+* Added structured output formatting
+
+Files Modified:
+
+* cli.py
+
+Notes:
+
+* CLI improves developer ergonomics by providing a single command to place testnet orders; it only orchestrates existing components and does not perform validation.

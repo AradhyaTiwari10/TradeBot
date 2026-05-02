@@ -1,11 +1,60 @@
-"""CLI entrypoint for the trading_bot project.
+"""Command-line interface for the trading bot built with Typer."""
+from typing import Optional
 
-Purpose:
-- Provide a Typer-based command-line interface to control and inspect the bot.
+import typer
 
-TODO:
-- Add commands: start, stop, status, config, and debug utilities.
-- Wire CLI to application services once implemented.
-"""
+from bot.client import get_client
+from bot.models import OrderRequest
+from bot.orders import place_order
+from bot.exceptions import ValidationError, APIError
 
-# NOTE: No commands implemented yet — placeholder only
+app = typer.Typer()
+
+
+@app.command()
+def trade(
+    symbol: str,
+    side: str,
+    order_type: str,
+    quantity: float,
+    price: Optional[float] = None,
+) -> None:
+    """Place an order on Binance Futures Testnet.
+
+    Example: python cli.py trade BTCUSDT BUY MARKET 0.01
+    """
+    try:
+        order = OrderRequest(
+            symbol=symbol,
+            side=side,
+            order_type=order_type,
+            quantity=quantity,
+            price=price,
+        )
+
+        client = get_client()
+        result = place_order(client, order)
+
+        # Exact output format required by spec
+        print("Order Summary:")
+        print()
+        print(f"* Symbol: {order.symbol}")
+        print(f"* Side: {order.side}")
+        print(f"* Type: {order.order_type}")
+        print(f"* Quantity: {order.quantity}")
+        print()
+        print("Result:")
+        print()
+        print(f"* Order ID: {result.order_id}")
+        print(f"* Status: {result.status}")
+        print(f"* Executed Qty: {result.executed_qty}")
+        print(f"* Avg Price: {result.avg_price}")
+
+    except (ValidationError, APIError) as exc:
+        print(f"❌ Error: {exc}")
+    except Exception as exc:  # pragma: no cover - unexpected errors
+        print(f"❌ Error: {exc}")
+
+
+if __name__ == "__main__":
+    app()
