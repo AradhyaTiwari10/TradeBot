@@ -2,19 +2,20 @@
 
 ## Overview
 
-A modular and production-ready Python CLI application that places MARKET and LIMIT orders on Binance Futures Testnet (USDT-M). Built with clean architecture, validation, logging, and structured output.
+A compact, production-oriented Python CLI that places MARKET, LIMIT and STOP_LIMIT orders on Binance Futures Testnet (USDT-M). Focused on fast setup, safety (validation), and clear CLI output.
 
-## Features
+## ⚙️ Features
 
-- Place MARKET and LIMIT orders
-- Supports BUY and SELL
-- CLI interface using Typer
+- MARKET, LIMIT, and STOP-LIMIT orders
+- BUY and SELL support
+- CLI with multi-command interface (trade, info)
 - Input validation (fail-fast)
+- Exchange-aware validation (minQty, stepSize, tickSize, minPrice)
 - Structured logging (bot.log)
-- Clean output formatting
-- Modular architecture (client, orders, validators)
+- Clean, readable output
+- Modular architecture
 
-## Project Structure
+## Project structure
 
 ```
 trading_bot/
@@ -32,7 +33,7 @@ trading_bot/
 ├── journal.md
 ```
 
-## Setup Instructions
+## Setup
 
 1. Clone the repository
 
@@ -47,112 +48,79 @@ cd trading_bot
 pip install -r requirements.txt
 ```
 
-3. Setup environment variables
-
-Create a `.env` file:
+3. Create `.env` with testnet keys
 
 ```env
 API_KEY=your_api_key
 API_SECRET=your_api_secret
 ```
 
-4. Get Binance Testnet API Keys
+4. Get Binance Futures Testnet API keys: https://testnet.binancefuture.com
 
-- Go to: https://testnet.binancefuture.com
-- Create API key
-- Enable Futures trading
+## ▶️ Usage
 
-## Usage
-
-### MARKET Order
+### Trade (MARKET)
 
 ```bash
-python cli.py BTCUSDT BUY MARKET 0.01
+python cli.py trade BTCUSDT BUY MARKET 0.01
 ```
 
-### LIMIT Order
+Trade (LIMIT)
 
 ```bash
-python cli.py BTCUSDT SELL LIMIT 0.01 60000
+python cli.py trade BTCUSDT SELL LIMIT 0.01 60000
 ```
 
-## Example Output
+Trade (STOP-LIMIT)
 
+```bash
+python cli.py trade BTCUSDT BUY STOP_LIMIT 0.01 72000 71000
 ```
----
-## Order Summary
 
-Symbol      : BTCUSDT
-Side        : BUY
-Type        : MARKET
-Quantity    : 0.01
+Symbol Info (exchange rules)
+
+```bash
+python cli.py info BTCUSDT
+```
 
 ---
 
-## Result
+## 📊 Example Output
 
-Order ID    : 13099696425
-Status      : NEW
-Executed Qty: 0.0
-Avg Price   : 0.0
+### info command
+
 ```
+Symbol: BTCUSDT
+minQty : 0.001
+stepSize: 0.001
+tickSize: 0.1
+minPrice: 0.1
+```
+
+## Validation & assumptions
+
+- Inputs are validated locally; exchange rules (when available) are enforced before API calls.
+- STOP-LIMIT orders must respect trigger rules relative to market price (else Binance returns error -2021).
+
+## 🧪 Testing
+
+- Verified MARKET, LIMIT, and STOP-LIMIT orders on Binance Futures Testnet
+- Verified exchange-aware validation prevents invalid orders before API calls
 
 ## Logging
 
-All API activity is logged to `bot.log` in the repository root.
-
-Example:
-
-```
-2026-05-02 17:59:01 - INFO - Placing MARKET order BTCUSDT BUY 0.01
-2026-05-02 17:59:02 - INFO - Order Success ID=13099696425 Status=NEW
-```
-
-## Error Handling
-
-- Validation errors handled before API call
-- API errors wrapped and displayed cleanly
-
-Example:
-
-```
----
-❌ Error
-
-Message: Invalid side: must be BUY or SELL
-```
-
-## Design Principles
-
-- Separation of concerns
-- Clean architecture
-- Fail-fast validation
-- Structured logging
-- Reusable components
-
-## Assumptions
-
-- Using Binance Futures Testnet (not mainnet)
-- MARKET orders may return status NEW on testnet
-- LIMIT orders must follow exchange price constraints
-
-## Testing
-
-- Tested with real Binance Futures Testnet API
-- MARKET and LIMIT orders verified
+Actions and responses are logged to `bot.log` (INFO). Logs never include API keys.
 
 ## Requirements
 
-- Python 3.x
+- Python 3.8+
 - python-binance
 - python-dotenv
 - typer
 
-## Future Improvements
+## Security
 
-- Stop-Limit / advanced order types
-- Multi-command CLI
-- UI dashboard
+Do not commit `.env` or `bot.log`. If they were committed, remove from history and rotate keys.
 
 ## Author
 
