@@ -47,6 +47,24 @@ def place_order(client: Any, order_request: OrderRequest) -> OrderResponse:
                 price=order_request.price,
                 timeInForce="GTC",
             )
+        elif order_type == "STOP_LIMIT":
+            logging.info(
+                "Placing STOP_LIMIT order %s %s %s @ %s stop=%s",
+                order_request.symbol,
+                order_request.side,
+                order_request.quantity,
+                order_request.price,
+                order_request.stop_price,
+            )
+            resp = client.futures_create_order(
+                symbol=order_request.symbol,
+                side=order_request.side,
+                type="STOP",
+                quantity=order_request.quantity,
+                price=order_request.price,
+                stopPrice=order_request.stop_price,
+                timeInForce="GTC",
+            )
         else:
             raise ValidationError(f"Unsupported order type: {order_type}")
 

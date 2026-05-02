@@ -158,6 +158,29 @@ Notes:
 * This keeps logs concise and avoids showing 'None' for MARKET orders.
 
 
+Timestamp: 2026-05-02T18:33:00.000+05:30
+
+Milestone: Stop-Limit Order
+
+Changes:
+
+* Added STOP_LIMIT order support
+* Extended OrderRequest with stop_price
+* Updated validation logic
+* Integrated STOP_LIMIT in order engine
+
+Files Modified:
+
+* bot/models.py
+* bot/validators.py
+* bot/orders.py
+* cli.py
+
+Notes:
+
+* STOP_LIMIT implemented using Binance STOP order type
+
+
 Timestamp: 2026-05-02T18:06:21.008+05:30
 
 Milestone: Output Formatting

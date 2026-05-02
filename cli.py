@@ -20,6 +20,7 @@ def trade(
     order_type: str = typer.Argument(...),
     quantity: float = typer.Argument(...),
     price: Optional[float] = typer.Argument(None),
+    stop_price: Optional[float] = typer.Argument(None),
 ) -> None:
     """Place an order on Binance Futures Testnet.
     
@@ -32,6 +33,7 @@ def trade(
             order_type=order_type,
             quantity=quantity,
             price=price,
+            stop_price=stop_price,
         )
 
         validate_order(order)

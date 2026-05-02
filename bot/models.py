@@ -11,6 +11,7 @@ class OrderRequest:
     order_type: str
     quantity: float
     price: Optional[float] = None
+    stop_price: Optional[float] = None
 
 
 @dataclass
