@@ -39,3 +39,12 @@ def validate_order_request(order: OrderRequest) -> None:
         if order.price is None:
             raise ValidationError("LIMIT orders require a price")
         _ensure_positive(order.price, "price")
+
+
+# Backwards/alternate API: provide the name validate_order as requested by spec
+def validate_order(order: OrderRequest) -> None:
+    """Alias for validate_order_request to match public API.
+
+    Kept minimal: validation logic lives in validate_order_request.
+    """
+    return validate_order_request(order)

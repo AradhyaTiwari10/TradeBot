@@ -99,3 +99,22 @@ Files Modified:
 Notes:
 
 * Validation is kept separate from business logic and raises ValidationError on invalid inputs. Quantity and price must be positive numbers; side and order_type are constrained to BUY/SELL and MARKET/LIMIT respectively.
+
+
+Timestamp: 2026-05-02T17:30:58.105+05:30
+
+Milestone: Validation Layer (CLI Integration)
+
+Changes:
+
+* Added public function validate_order(order: OrderRequest)
+* Integrated validation into CLI before API call
+
+Files Modified:
+
+* bot/validators.py
+* cli.py
+
+Notes:
+
+* validate_order is an alias to the internal validate_order_request to provide the exact API requested. Validation prevents invalid API calls and improves reliability.

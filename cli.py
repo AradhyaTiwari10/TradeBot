@@ -32,6 +32,11 @@ def trade(
             price=price,
         )
 
+        from bot.validators import validate_order
+
+        # Validate before performing API call
+        validate_order(order)
+
         client = get_client()
         result = place_order(client, order)
 
