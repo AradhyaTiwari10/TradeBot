@@ -192,3 +192,20 @@ Files Modified:
 Notes:
 
 * This keeps logs concise and avoids showing 'None' for MARKET orders.
+
+
+Timestamp: 2026-05-02T18:09:41.976+05:30
+
+Milestone: README
+
+Changes:
+
+* Created comprehensive README with setup, usage, and examples
+
+Files Modified:
+
+* README.md
+
+Notes:
+
+* README is professional, evaluator-friendly, and contains setup/run instructions.
