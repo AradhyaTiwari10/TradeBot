@@ -1,8 +1,4 @@
-"""Validation helpers for trading inputs.
-
-Keep validation separate from business logic. Validators raise
-ValidationError on failure.
-"""
+"""Input validation for orders."""
 from typing import Iterable
 
 from .models import OrderRequest
@@ -14,11 +10,13 @@ VALID_ORDER_TYPES = {"MARKET", "LIMIT"}
 
 
 def _ensure_in(value: str, allowed: Iterable[str], name: str) -> None:
+    """Check that value (case-insensitive) is in allowed set."""
     if value.upper() not in allowed:
         raise ValidationError(f"Invalid {name}: {value}. Allowed: {', '.join(sorted(allowed))}")
 
 
 def _ensure_positive(number: float, name: str) -> None:
+    """Verify that number is positive."""
     try:
         if float(number) <= 0:
             raise ValidationError(f"{name} must be positive")
@@ -26,8 +24,8 @@ def _ensure_positive(number: float, name: str) -> None:
         raise ValidationError(f"{name} must be a number")
 
 
-def validate_order_request(order: OrderRequest) -> None:
-    """Validate an OrderRequest in-place. Raises ValidationError on failure."""
+def validate_order(order: OrderRequest) -> None:
+    """Validate order fields before submission."""
     if not isinstance(order, OrderRequest):
         raise ValidationError("Invalid order object")
 
@@ -39,12 +37,3 @@ def validate_order_request(order: OrderRequest) -> None:
         if order.price is None:
             raise ValidationError("LIMIT orders require a price")
         _ensure_positive(order.price, "price")
-
-
-# Backwards/alternate API: provide the name validate_order as requested by spec
-def validate_order(order: OrderRequest) -> None:
-    """Alias for validate_order_request to match public API.
-
-    Kept minimal: validation logic lives in validate_order_request.
-    """
-    return validate_order_request(order)

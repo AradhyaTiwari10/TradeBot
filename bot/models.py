@@ -1,13 +1,11 @@
-"""Data models for trading requests and responses.
-
-Uses dataclasses for lightweight, typed structures shared across modules.
-"""
+"""Domain models for order requests and responses."""
 from dataclasses import dataclass
 from typing import Optional
 
 
 @dataclass
 class OrderRequest:
+    """Request model for placing an order."""
     symbol: str
     side: str
     order_type: str
@@ -17,6 +15,7 @@ class OrderRequest:
 
 @dataclass
 class OrderResponse:
+    """Response model from order execution."""
     order_id: int
     status: str
     executed_qty: float

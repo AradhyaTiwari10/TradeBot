@@ -1,4 +1,4 @@
-"""Command-line interface for the trading bot built with Typer."""
+"""CLI interface for order placement."""
 from typing import Optional
 
 import typer
@@ -6,7 +6,9 @@ import typer
 from bot.client import get_client
 from bot.models import OrderRequest
 from bot.orders import place_order
+from bot.validators import validate_order
 from bot.exceptions import ValidationError, APIError
+from bot.logging_config import setup_logging
 
 app = typer.Typer()
 
@@ -20,8 +22,8 @@ def trade(
     price: Optional[float] = typer.Argument(None),
 ) -> None:
     """Place an order on Binance Futures Testnet.
-
-    Example: python cli.py trade BTCUSDT BUY MARKET 0.01
+    
+    Example: python cli.py BTCUSDT BUY MARKET 0.01
     """
     try:
         order = OrderRequest(
@@ -32,15 +34,10 @@ def trade(
             price=price,
         )
 
-        from bot.validators import validate_order
-
-        # Validate before performing API call
         validate_order(order)
-
         client = get_client()
         result = place_order(client, order)
 
-        # Improved, aligned output
         print("---")
         print("## Order Summary\n")
         print(f"Symbol      : {order.symbol}")
@@ -56,17 +53,14 @@ def trade(
 
     except (ValidationError, APIError) as exc:
         print("---")
-        print("❌ Error\n")
+        print("Error\n")
         print(f"Message: {exc}\n")
-    except Exception as exc:  # pragma: no cover - unexpected errors
+    except Exception as exc:
         print("---")
-        print("❌ Error\n")
+        print("Error\n")
         print(f"Message: {exc}\n")
 
 
 if __name__ == "__main__":
-    # Initialize logging for the CLI run
-    from bot.logging_config import setup_logging
-
     setup_logging()
     app()
