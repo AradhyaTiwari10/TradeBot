@@ -13,11 +13,11 @@ app = typer.Typer()
 
 @app.command()
 def trade(
-    symbol: str,
-    side: str,
-    order_type: str,
-    quantity: float,
-    price: Optional[float] = None,
+    symbol: str = typer.Argument(...),
+    side: str = typer.Argument(...),
+    order_type: str = typer.Argument(...),
+    quantity: float = typer.Argument(...),
+    price: Optional[float] = typer.Argument(None),
 ) -> None:
     """Place an order on Binance Futures Testnet.
 

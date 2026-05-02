@@ -63,3 +63,20 @@ Files Modified:
 Notes:
 
 * CLI improves developer ergonomics by providing a single command to place testnet orders; it only orchestrates existing components and does not perform validation.
+
+
+Timestamp: 2026-05-02T17:20:00.000+05:30
+
+Milestone: CLI Fix
+
+Changes:
+
+* Use typer.Argument for positional arguments to avoid parsing ambiguity for optional price
+
+Files Modified:
+
+* cli.py
+
+Notes:
+
+* This change makes the positional 'price' argument unambiguous and prevents Typer from treating earlier tokens as the quantity.
